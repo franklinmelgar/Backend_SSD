@@ -32,7 +32,7 @@ public partial class AnalisisFinanzasContext : DbContext
     public virtual DbSet<TipoLibretum> TipoLibreta { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    => optionsBuilder.UseSqlServer("Server=DESKTOP-7EK03LQ; Database=AnalisisFinanzas;Trusted_Connection=True;TrustServerCertificate=True");
+    => optionsBuilder.UseSqlServer("Server=MHAYDE\\SQLEXPRESS; Database=AnalisisFinanzas;Trusted_Connection=True;TrustServerCertificate=True");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
