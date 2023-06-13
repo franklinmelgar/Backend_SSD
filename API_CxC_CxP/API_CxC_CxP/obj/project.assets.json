@@ -3908,19 +3908,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\hayde\\.nuget\\packages\\": {}
+    "C:\\Users\\frank\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\hayde\\OneDrive\\Documents\\GitHub\\Backend_SSD\\API_CxC_CxP\\API_CxC_CxP\\API_CxC_CxP.csproj",
+      "projectUniqueName": "C:\\Users\\frank\\OneDrive\\Documents\\Clases Ceutec\\Proyectos desarrollo\\API_CxC_CxP\\API_CxC_CxP\\API_CxC_CxP\\API_CxC_CxP.csproj",
       "projectName": "API_CxC_CxP",
-      "projectPath": "C:\\Users\\hayde\\OneDrive\\Documents\\GitHub\\Backend_SSD\\API_CxC_CxP\\API_CxC_CxP\\API_CxC_CxP.csproj",
-      "packagesPath": "C:\\Users\\hayde\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\hayde\\OneDrive\\Documents\\GitHub\\Backend_SSD\\API_CxC_CxP\\API_CxC_CxP\\obj\\",
+      "projectPath": "C:\\Users\\frank\\OneDrive\\Documents\\Clases Ceutec\\Proyectos desarrollo\\API_CxC_CxP\\API_CxC_CxP\\API_CxC_CxP\\API_CxC_CxP.csproj",
+      "packagesPath": "C:\\Users\\frank\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\frank\\OneDrive\\Documents\\Clases Ceutec\\Proyectos desarrollo\\API_CxC_CxP\\API_CxC_CxP\\API_CxC_CxP\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\hayde\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\frank\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -3994,7 +3994,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.100\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.400\\RuntimeIdentifierGraph.json"
       }
     }
   }

@@ -15,38 +15,38 @@ namespace API_CxC_CxP.Controllers
         private AnalisisFinanzasContext context = new AnalisisFinanzasContext();
 
         // GET: api/<MedidoresController>
-        [HttpGet("{fechaInicial}, {fechaFinal}, {medidor}")]
-        public ActionResult Get(DateTime fechaInicial, DateTime fechaFinal, string medidor)
+        [HttpGet("{fechaInicial}, {fechaFinal}, {medidor}, {tipoDocumento}")]
+        public ActionResult Get(DateTime fechaInicial, DateTime fechaFinal, string medidor, int tipoDocumento)
         {
             try
             {
                 if (medidor.Equals("TotalCompras"))
                 {
-                    return Ok(context.Documentos.Where(d => d.CodigoTipoDocumento.Equals(1) && d.FechaDocumento >= fechaInicial && d.FechaDocumento <= fechaFinal && d.EstadoDocumento.Equals("Pendiente")).Sum(c => c.MontoTotal));
+                    return Ok(context.Documentos.Where(d => d.CodigoTipoDocumento.Equals(tipoDocumento) && d.FechaDocumento >= fechaInicial && d.FechaDocumento <= fechaFinal && d.EstadoDocumento.Equals("Pendiente")).Sum(c => c.MontoTotal));
                 }
                 else if(medidor.Equals("TotalVencido"))
                 {
-                    return Ok(context.Documentos.Where(d => d.CodigoTipoDocumento.Equals(1) && d.FechaVencimiento <= fechaFinal && d.EstadoDocumento.Equals("Pendiente")).Sum(c => c.MontoTotal));
+                    return Ok(context.Documentos.Where(d => d.CodigoTipoDocumento.Equals(tipoDocumento) && d.FechaVencimiento <= fechaFinal && d.EstadoDocumento.Equals("Pendiente")).Sum(c => c.MontoTotal));
                 }
                 else if (medidor.Equals("TotalPorVencer"))
                 {
-                    return Ok(context.Documentos.Where(d => d.CodigoTipoDocumento.Equals(1) && d.FechaVencimiento > fechaFinal && d.EstadoDocumento.Equals("Pendiente")).Sum(c => c.MontoTotal));
+                    return Ok(context.Documentos.Where(d => d.CodigoTipoDocumento.Equals(tipoDocumento) && d.FechaVencimiento > fechaFinal && d.EstadoDocumento.Equals("Pendiente")).Sum(c => c.MontoTotal));
                 }
                 else if (medidor.Equals("graficoComprasMensuales")) {
                     var AnioActual = DateTime.Now.Year;
-                    return Ok(context.Documentos.Where(d => d.CodigoTipoDocumento.Equals(1) && d.FechaDocumento.Value.Year.Equals(AnioActual)).GroupBy(d => d.FechaDocumento.Value.Month).Select(g => new { Month = g.Key, TotalAmount = g.Sum(d => d.MontoTotal)}));
+                    return Ok(context.Documentos.Where(d => d.CodigoTipoDocumento.Equals(tipoDocumento) && d.FechaDocumento.Value.Year.Equals(AnioActual)).GroupBy(d => d.FechaDocumento.Value.Month).Select(g => new { Month = g.Key, TotalAmount = g.Sum(d => d.MontoTotal)}));
                 }
                 else if (medidor.Equals("graficoVentasPorCategoria"))
                 {
-                    return Ok(context.Set<Documento>().Include(d => d.CodigoLibretaNavigation).Include(l => l.CodigoLibretaNavigation.CodigoCategoriaNavigation).Where(d => d.CodigoTipoDocumento.Equals(1) && d.FechaDocumento >= fechaInicial && d.FechaDocumento <= fechaFinal).GroupBy(d => d.CodigoLibretaNavigation.CodigoCategoriaNavigation.DescripcionCategoria).Select(g => new {DescripcionCategoria = g.Key, TotalMonto = g.Sum(dl => dl.MontoTotal)})) ;
+                    return Ok(context.Set<Documento>().Include(d => d.CodigoLibretaNavigation).Include(l => l.CodigoLibretaNavigation.CodigoCategoriaNavigation).Where(d => d.CodigoTipoDocumento.Equals(tipoDocumento) && d.FechaDocumento >= fechaInicial && d.FechaDocumento <= fechaFinal).GroupBy(d => d.CodigoLibretaNavigation.CodigoCategoriaNavigation.DescripcionCategoria).Select(g => new {DescripcionCategoria = g.Key, TotalMonto = g.Sum(dl => dl.MontoTotal)})) ;
                 }
                 else if (medidor.Equals("DetalleFacturasVencidas"))
                 {
-                    return Ok(context.Set<Documento>().Include(d => d.CodigoLibretaNavigation).Where(d => d.CodigoTipoDocumento.Equals(1) && d.FechaVencimiento <= fechaFinal).GroupBy(d => new { d.NumeroDocumento, d.CodigoLibreta, d.CodigoLibretaNavigation.NombreLibreta, d.FechaDocumento, d.FechaVencimiento } ).Select(g => new { g.Key.NumeroDocumento, g.Key.CodigoLibreta, g.Key.NombreLibreta, g.Key.FechaDocumento, g.Key.FechaVencimiento, TotalMonto = g.Sum(dl => dl.MontoTotal) }));
+                    return Ok(context.Set<Documento>().Include(d => d.CodigoLibretaNavigation).Where(d => d.CodigoTipoDocumento.Equals(tipoDocumento) && d.FechaVencimiento <= fechaFinal).GroupBy(d => new { d.NumeroDocumento, d.CodigoLibreta, d.CodigoLibretaNavigation.NombreLibreta, d.FechaDocumento, d.FechaVencimiento } ).Select(g => new { g.Key.NumeroDocumento, g.Key.CodigoLibreta, g.Key.NombreLibreta, g.Key.FechaDocumento, g.Key.FechaVencimiento, TotalMonto = g.Sum(dl => dl.MontoTotal) }).Take(5));
                 }
                 else if (medidor.Equals("DetallePorVencer"))
                 {
-                    return Ok(context.Set<Documento>().Include(d => d.CodigoLibretaNavigation).Where(d => d.CodigoTipoDocumento.Equals(1) && d.FechaVencimiento > fechaFinal && d.EstadoDocumento.Equals("Pendiente")).GroupBy(d => new { d.NumeroDocumento, d.CodigoLibreta, d.CodigoLibretaNavigation.NombreLibreta, d.FechaDocumento, d.FechaVencimiento }).Select(g => new { g.Key.NumeroDocumento, g.Key.CodigoLibreta, g.Key.NombreLibreta, g.Key.FechaDocumento, g.Key.FechaVencimiento, TotalMonto = g.Sum(dl => dl.MontoTotal) }));
+                    return Ok(context.Set<Documento>().Include(d => d.CodigoLibretaNavigation).Where(d => d.CodigoTipoDocumento.Equals(tipoDocumento) && d.FechaVencimiento > fechaFinal && d.EstadoDocumento.Equals("Pendiente")).GroupBy(d => new { d.NumeroDocumento, d.CodigoLibreta, d.CodigoLibretaNavigation.NombreLibreta, d.FechaDocumento, d.FechaVencimiento }).Select(g => new { g.Key.NumeroDocumento, g.Key.CodigoLibreta, g.Key.NombreLibreta, g.Key.FechaDocumento, g.Key.FechaVencimiento, TotalMonto = g.Sum(dl => dl.MontoTotal)}).Take(5));
                 }
                 else
                 {
