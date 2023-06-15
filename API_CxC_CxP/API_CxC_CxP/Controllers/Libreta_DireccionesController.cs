@@ -20,7 +20,7 @@ namespace API_CxC_CxP.Controllers
         {
             try
             {
-                return Ok(context.LibretaDirecciones.ToList());
+                return Ok(context.LibretaDirecciones.ToList());                
             }
             catch (Exception ex)
             {
